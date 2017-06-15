@@ -7,7 +7,7 @@ library(treemap)
 
 fcrall <- fcr_load()
 
-fcr <- fcr_fetch(fcrall, sites=c(0), dg_y = 1953)
+fcr <- fcr_fetch(fcrall, sites=c(0), dg_y = 2014)
 
 #UPPER LEVEL CANCER TYPES
 # taulukoidaan ja lisätään pyrs
