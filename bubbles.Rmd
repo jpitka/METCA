@@ -1,0 +1,57 @@
+---
+title: "Poimintoja"
+author: "Janne Pitkaniemi"
+date: "13.6.2017"
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(fcr)
+library(popEpi)
+library(ggplot2)
+library(plotly)
+library(knitr)
+```
+```{r part1}
+fcrall <- fcr_load()
+fcr <- fcr_fetch(fcrall, sites = c(0), dg_y = 2014)
+```
+
+
+```{r total}
+
+fcr1<-rbind(cbind(sex="Kaikki",ltable(fcr)),ltable(fcr, by.vars = c("sex"),use.levels = FALSE))
+
+
+fcr1$sex[2:3]<-c("Miehet","Naiset")
+fcr1$x<-c(0,0.5,1)
+fcr1$y<-c(0.5,0.5,0.5)
+fcr1$obs<-as.numeric(fcr1$obs)
+
+p<-ggplot(fcr1, aes(x, y,size=obs,colour = c("white","blue","red"))) +
+  geom_count() +
+  geom_point (aes(x,y),alpha=1)+
+   #scale_colour_manual(values = c("one" = "white", "two"="blue","three"="red")+
+  scale_size_area(max_size = 45)+
+  ggtitle("Uudet syövät 2014")+
+  theme(legend.position="none",
+        element_blank(),
+        panel.background = element_blank(),
+        axis.text.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        plot.title = element_text(hjust = 0.5))+
+        annotate("text", x = fcr1$x, y = 0.5, label = c(paste(fcr1$obs)),parse = TRUE)+
+  annotate("text", x = fcr1$x, y =0.85 , label = fcr1$sex,parse = TRUE)+
+scale_x_continuous(limits = c(-0.25,1.25))+
+  scale_y_continuous(limits = c(0,1))
+p
+```  
+Testi
+
+
+  
